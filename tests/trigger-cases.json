@@ -1,0 +1,37 @@
+{
+  "should_trigger": [
+    {
+      "id": "conversation-to-assets",
+      "input": "使用 OPCSkill，把下面这段 AI 对话整理成可复用的一人公司资产，重点提取我的真实决策和可复用 prompt。",
+      "must_include": ["Decision Ledger", "Prompt Card", "Next-Run Bootstrap"]
+    },
+    {
+      "id": "decision-extraction",
+      "input": "从这段 Codex 对话里提取我真正决定了什么、为什么这么决定、哪些只是模型建议。",
+      "must_include": ["human", "model_proposal", "evidence_quote"]
+    },
+    {
+      "id": "session-cleaning",
+      "input": "我筛选了一段高价值 Claude session，帮我沉淀成决策记录、任务包和下一轮接续说明。",
+      "must_include": ["Task Packet", "open_loops", "next_action"]
+    }
+  ],
+  "should_not_trigger": [
+    {
+      "id": "casual-summary",
+      "input": "帮我简单总结一下这段话。",
+      "reason": "No durable asset requested."
+    },
+    {
+      "id": "direct-code-edit",
+      "input": "直接修复这个 TypeScript bug。",
+      "reason": "Execution task, not conversation asset extraction."
+    },
+    {
+      "id": "generic-explanation",
+      "input": "RAG 是什么？",
+      "reason": "Learning explanation only; use a learning/explanation skill instead."
+    }
+  ]
+}
+
