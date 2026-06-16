@@ -37,6 +37,38 @@ flowchart LR
 
 一句话：OPCSkill 先把对话变成可信资产，再让这些资产进入下一轮 AI 协作。
 
+## OPCSkill Stack：组合使用时的完整闭环
+
+OPCSkill 可以独立运行；但当它和理解、Prompt 编译、评估、复盘、可视化这些 companion skills 组合使用时，会形成完整的人机学习资产闭环。
+
+```mermaid
+flowchart LR
+  A["人的真实困惑 / 想法 / 任务<br/>Human Confusion / Intent"] --> B["lijie / understanding<br/>理解概念结构<br/>Concept Structure"]
+
+  B --> C["token-prompt-compiler<br/>编译 Prompt / Task Packet<br/>Executable Task Contract"]
+
+  C --> D["AI Session<br/>Codex / Claude / ChatGPT<br/>对话、执行、探索"]
+
+  D --> E["OPCSkill<br/>主入口与资产路由器<br/>Human Thinking Asset Router"]
+
+  E --> F["Human Layer<br/>人的思维资产<br/>断点 / 决策 / 破局方式"]
+
+  E --> G["Machine Layer<br/>Agent 可接续资产<br/>Decision Ledger / Prompt Card / Task Packet"]
+
+  F --> H["evaluation<br/>Markdown 报告 / 证据审查<br/>Human-readable Report"]
+
+  G --> I["audit-evolution<br/>复盘 / 纠偏 / 下一轮接续<br/>Next-run Bootstrap"]
+
+  H --> J["claude-code-html-skill<br/>可视化审查界面<br/>HTML Review Surface"]
+
+  I --> K["下一轮更好的 AI 协作<br/>Better Next AI Run"]
+  J --> K
+
+  K --> A
+```
+
+单独使用时，OPCSkill 能把一段对话沉淀成 Human Layer 和 Machine Layer；组合使用时，它会成为 Skill Stack 的主入口，把人的困惑、Prompt、任务、对话、复盘和可视化串成一条可复利的学习与执行循环。
+
 ## Human Layer + Machine Layer
 
 OPCSkill 的完整资产应该先给人读，再给机器接续。
