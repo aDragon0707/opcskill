@@ -105,6 +105,11 @@ for (const phrase of [
   "Markdown + HTML",
   "claude-code-html-skill",
   "mermaid",
+  "https://github.com/aDragon0707/understanding",
+  "https://github.com/aDragon0707/token-prompt-compiler",
+  "https://github.com/aDragon0707/audit-evolution-agent-flight-recorder",
+  "https://github.com/aDragon0707/claude-code-html-skill",
+  "planned public repo / local for now",
 ]) {
   assert(readme.includes(phrase), `README includes ${phrase}`);
 }

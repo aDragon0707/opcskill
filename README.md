@@ -131,15 +131,15 @@ flowchart LR
   H --> N["HTML Review Surface"]
 ```
 
-| 需要 | 可协作 skill |
-|---|---|
-| 理解概念结构 | `lijie` |
-| 编译 Prompt / Task Packet | `token-prompt-compiler` |
-| 整理成 Markdown 报告 | `evaluation` |
-| 事后复盘和接续 | `audit-evolution` |
-| 把资产转成可视化审查界面 | `claude-code-html-skill` |
+| 需要 | 可协作 skill | 它负责什么 | 链接 / 状态 |
+|---|---|---|---|
+| 理解概念结构 | `lijie` / `understanding` | 拆解概念、机制、学习地图 | [aDragon0707/understanding](https://github.com/aDragon0707/understanding) |
+| 编译 Prompt / Task Packet | `token-prompt-compiler` | 把模糊需求编译成可执行任务包 | [aDragon0707/token-prompt-compiler](https://github.com/aDragon0707/token-prompt-compiler) |
+| 整理成 Markdown 报告 | `evaluation` | 把对话、答案或评估材料沉淀成文档资产 | planned public repo / local for now |
+| 事后复盘和接续 | `audit-evolution` | 复盘、纠偏、上下文接续和 handoff | [aDragon0707/audit-evolution-agent-flight-recorder](https://github.com/aDragon0707/audit-evolution-agent-flight-recorder) |
+| 把资产转成可视化审查界面 | `claude-code-html-skill` | 把 Markdown 资产转成 HTML 展示、审查和导出界面 | [aDragon0707/claude-code-html-skill](https://github.com/aDragon0707/claude-code-html-skill) |
 
-如果这些 skill 不存在，OPCSkill 会使用内置的简化流程。
+这些是可选协作 skill，不是 OPCSkill 的硬依赖。如果这些 skill 不存在，OPCSkill 会使用内置的简化流程。
 
 ## 快速使用
 
