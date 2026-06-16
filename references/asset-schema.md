@@ -7,6 +7,8 @@ Use this reference when producing structured OPCSkill assets.
 ```yaml
 dialogue_asset:
   title:
+  source_kind: raw_conversation | already_synthesized_asset | prompt_archive | multi_session_request | visual_export_request
+  output_mode: full_asset | receipt | visual_export_plan
   source_scope:
   why_keep:
   asset_types:
@@ -23,6 +25,7 @@ dialogue_asset:
 decision_ledger:
   - decision:
     decided_by: human | model_proposal | inferred | unknown
+    proposal_origin: human_statement | model_proposal | mixed | unknown
     reason:
     evidence_quote:
     rejected_options:
@@ -89,6 +92,26 @@ next_run_bootstrap:
   avoid:
 ```
 
+## Retention Review
+
+```yaml
+retention_review:
+  keep:
+    - item:
+      reason:
+  redact:
+    - item:
+      reason:
+      replacement: "[REDACTED_SECRET]"
+  discard:
+    - item:
+      reason:
+  ask_user:
+    - question:
+      why_it_matters:
+      default_if_no_answer: redact | discard | keep_as_unknown
+```
+
 ## Validation Fields
 
 Every output should include:
@@ -96,8 +119,8 @@ Every output should include:
 ```yaml
 validation:
   human_decision_gate:
+  retention_gate:
   evidence_coverage:
   uncertainty:
   next_reuse_path:
 ```
-

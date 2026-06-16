@@ -11,11 +11,14 @@
 
 ```yaml
 dialogue_asset:
+  source_kind: raw_conversation
+  output_mode: full_asset
   why_keep: 命名和产品边界发生了明确转向。
   source_scope: user-provided excerpt
   decision_ledger:
     - decision: 外层仓库和品牌使用 OPCSkill，而不是 founder-dialogue-compiler。
       decided_by: human
+      proposal_origin: human_statement
       reason: 用户认为单一功能名不够美观，且未来可能加入不止一个 skill。
       evidence_quote: "不如都opcskill，后续一个一个进行更改就行，因为可能不止加进来这些skill"
       rejected_options:
@@ -28,6 +31,7 @@ dialogue_asset:
       do_not_claim: 不要声称 OPCSkill 已经包含完整 RAG、训练或批量清洗系统。
     - decision: 使用 founder-dialogue-compiler 作为最终产品名。
       decided_by: model_proposal
+      proposal_origin: model_proposal
       reason: assistant 曾提出该名称，但用户明确认为它缺少美感且过窄。
       evidence_quote: "一点美感都没有啊，你起的名字"
   reusable_assets:
@@ -54,8 +58,26 @@ dialogue_asset:
     next_run_bootstrap:
       current_state: 已决定外层名为 OPCSkill。
       next_action: 写中文 README、SKILL.md、Human Decision Gate 和 Asset Schema。
+  retention_review:
+    keep:
+      - item: 外层仓库和品牌使用 OPCSkill。
+        reason: 这是用户明确确认的产品命名决策。
+    redact: []
+    discard:
+      - item: 重复表达和闲聊语气。
+        reason: 不影响长期决策、prompt 或任务复用。
+    ask_user:
+      - question: 是否需要保存“美感”作为命名原则？
+        why_it_matters: 这可能影响后续子 skill 的命名风格。
+        default_if_no_answer: keep_as_unknown
   open_loops:
     - question: 第一个内部能力是否需要单独命名？
       owner: human
       next_action: 等 v0.1 用真实样本跑通后再命名。
+  validation:
+    human_decision_gate: pass
+    retention_gate: pass
+    evidence_coverage: human decision has direct quote
+    uncertainty: first internal capability name remains open
+    next_reuse_path: use as naming and repository-boundary bootstrap
 ```

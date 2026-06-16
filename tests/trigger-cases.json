@@ -14,6 +14,31 @@
       "id": "session-cleaning",
       "input": "我筛选了一段高价值 Claude session，帮我沉淀成决策记录、任务包和下一轮接续说明。",
       "must_include": ["Task Packet", "open_loops", "next_action"]
+    },
+    {
+      "id": "already-synthesized-asset",
+      "input": "这是一份已经整理过的 prompt 学习报告，请用 OPCSkill 做资产审查，提取人的核心思考、可复用输出和下一轮启动说明，不要再写一篇长摘要。",
+      "must_include": ["already_synthesized_asset", "asset audit", "reuse packaging", "retention_review"]
+    },
+    {
+      "id": "prompt-archive",
+      "input": "我有一个 prompt 素材库，里面有很多提示词和学习笔记。请先帮我建立整理计划和抽样标准，不要一次性全部清洗。",
+      "must_include": ["prompt_archive", "sample", "stop rules", "retention_review"]
+    },
+    {
+      "id": "multi-session-request",
+      "input": "我想整理 60 天 Codex 和 Claude 对话，沉淀成一人公司的长期资产。先给我可执行的范围、抽样和第一条样本处理方案。",
+      "must_include": ["multi_session_request", "scope", "sampling", "do not claim batch cleaning"]
+    },
+    {
+      "id": "visual-export-request",
+      "input": "请把这份已经确认的 Markdown 决策资产转成 HTML 展示案例，说明可视化结构和不要声称的边界。",
+      "must_include": ["visual_export_request", "visual_export_plan", "Markdown", "non-claims"]
+    },
+    {
+      "id": "accepted-model-proposal",
+      "input": "助手提出：可以把 OPCSkill 定位成一人公司的 AI 对话资产化入口。用户回答：对，但公开文案之后再确认。请整理成资产，区分谁接受了决策、这个提案最早来自哪里。",
+      "must_include": ["decided_by: human", "proposal_origin: model_proposal", "ask_user", "public wording"]
     }
   ],
   "should_not_trigger": [
@@ -31,7 +56,11 @@
       "id": "generic-explanation",
       "input": "RAG 是什么？",
       "reason": "Learning explanation only; use a learning/explanation skill instead."
+    },
+    {
+      "id": "execute-prompt-directly",
+      "input": "请直接用这个 prompt 帮我生成一篇营销文案，不需要沉淀资产。",
+      "reason": "The user wants direct task execution, not durable asset extraction."
     }
   ]
 }
-
