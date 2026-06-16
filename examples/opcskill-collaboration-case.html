@@ -1,0 +1,1309 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OPCSkill Collaboration Case</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18211f;
+      --muted: #66736f;
+      --quiet: #eef2ef;
+      --line: #d8e0dc;
+      --paper: #fbfcfa;
+      --panel: #ffffff;
+      --green: #256a4d;
+      --green-soft: #e6f2eb;
+      --blue: #2e5f8f;
+      --blue-soft: #e7f0f9;
+      --amber: #9a6722;
+      --amber-soft: #fff1d8;
+      --rose: #9b3f4c;
+      --rose-soft: #f9e7ea;
+      --violet: #6a529a;
+      --violet-soft: #eee9f8;
+      --shadow: 0 22px 70px rgba(24, 33, 31, .12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    button,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: .68rem 1rem;
+      cursor: pointer;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease, box-shadow .16s ease;
+      min-height: 42px;
+    }
+
+    button:hover,
+    button:focus-visible {
+      border-color: rgba(37, 106, 77, .48);
+      box-shadow: 0 8px 24px rgba(37, 106, 77, .14);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 88svh;
+      display: grid;
+      align-items: start;
+      padding: clamp(42px, 8svh, 96px) 0 34px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(115deg, rgba(37, 106, 77, .12), rgba(46, 95, 143, .08) 44%, rgba(154, 103, 34, .09)),
+        var(--paper);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .88fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 14px;
+      max-width: 760px;
+      font-size: clamp(2.8rem, 4.8vw, 4.9rem);
+      line-height: .98;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .slogan {
+      margin: 0 0 18px;
+      max-width: 760px;
+      font-size: clamp(1.34rem, 2.3vw, 2.05rem);
+      line-height: 1.24;
+      font-weight: 750;
+      color: #273632;
+    }
+
+    .intro {
+      margin: 0;
+      max-width: 720px;
+      color: #41504c;
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .primary {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .secondary {
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .hero-panel {
+      background: rgba(255, 255, 255, .86);
+      border: 1px solid rgba(216, 224, 220, .95);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .flow-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .flow-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 2px;
+    }
+
+    .flow-title h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border-radius: 999px;
+      padding: .24rem .58rem;
+      background: var(--quiet);
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .flow-svg {
+      width: 100%;
+      min-height: 314px;
+      display: block;
+      border-radius: var(--radius);
+      background: #f8faf8;
+      border: 1px solid var(--line);
+    }
+
+    .hero-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    main {
+      padding-bottom: 80px;
+    }
+
+    section {
+      padding: 58px 0 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .7fr) minmax(280px, .3fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.7rem);
+      line-height: 1.05;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .band {
+      background: #fff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 58px 0;
+      margin-top: 58px;
+    }
+
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .compare-box,
+    .lane,
+    .asset-card,
+    .decision-card,
+    .workspace-panel,
+    .relationship-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .compare-box {
+      padding: 20px;
+    }
+
+    .compare-box.before {
+      border-top: 6px solid var(--rose);
+    }
+
+    .compare-box.after {
+      border-top: 6px solid var(--green);
+    }
+
+    .compare-box h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 14px;
+      font-size: 1.08rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: currentColor;
+      flex: none;
+    }
+
+    .compare-box.before h3 {
+      color: var(--rose);
+    }
+
+    .compare-box.after h3 {
+      color: var(--green);
+    }
+
+    ul.clean {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    ul.clean li {
+      position: relative;
+      padding-left: 22px;
+      color: #34433f;
+    }
+
+    ul.clean li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .68em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--line);
+    }
+
+    .after ul.clean li::before {
+      background: var(--green);
+    }
+
+    .before ul.clean li::before {
+      background: var(--rose);
+    }
+
+    .lanes {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .lane {
+      padding: 18px;
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      min-height: 280px;
+    }
+
+    .lane code,
+    code.inline {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: .9em;
+      background: #f2f5f3;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: .12rem .34rem;
+    }
+
+    .lane h3 {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .lane p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .lane.lijie {
+      border-top: 5px solid var(--green);
+    }
+
+    .lane.compiler {
+      border-top: 5px solid var(--blue);
+    }
+
+    .lane.evaluation {
+      border-top: 5px solid var(--amber);
+    }
+
+    .lane.html {
+      border-top: 5px solid var(--violet);
+    }
+
+    .decision-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      min-height: 38px;
+      padding: .54rem .82rem;
+      border-radius: 999px;
+      color: var(--muted);
+    }
+
+    .filter-btn.active {
+      background: #1f2a27;
+      color: #fff;
+      border-color: #1f2a27;
+    }
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .decision-card {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      border-left-width: 6px;
+    }
+
+    .decision-card[data-kind="human"] {
+      border-left-color: var(--green);
+    }
+
+    .decision-card[data-kind="model_proposal"] {
+      border-left-color: var(--blue);
+    }
+
+    .decision-card[data-kind="unknown"] {
+      border-left-color: var(--amber);
+    }
+
+    .kind {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0;
+      font-size: .82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-weight: 850;
+      letter-spacing: .05em;
+    }
+
+    blockquote {
+      margin: 0;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #f8faf8;
+      color: #263530;
+      font-weight: 700;
+    }
+
+    .reason {
+      margin: 0;
+      color: var(--muted);
+      font-size: .93rem;
+    }
+
+    .ledger {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      min-height: 30px;
+      border-radius: 999px;
+      padding: .22rem .62rem;
+      background: var(--quiet);
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 800;
+    }
+
+    .ledger.yes {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .ledger.no {
+      color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .workspace-panel {
+      padding: 18px;
+    }
+
+    .tab-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .tab-btn {
+      width: 100%;
+      text-align: left;
+      border-radius: var(--radius);
+      padding: .78rem .86rem;
+      min-height: 46px;
+      color: #33423e;
+      background: #f8faf8;
+    }
+
+    .tab-btn.active {
+      background: #1f2a27;
+      color: #fff;
+      border-color: #1f2a27;
+    }
+
+    .tab-view {
+      display: none;
+      min-height: 440px;
+    }
+
+    .tab-view.active {
+      display: block;
+    }
+
+    .conversation {
+      display: grid;
+      gap: 12px;
+    }
+
+    .turn {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #fbfcfa;
+    }
+
+    .speaker {
+      font-weight: 850;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .turn p {
+      margin: 0;
+    }
+
+    .assets {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .asset-card {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      min-height: 188px;
+    }
+
+    .asset-card h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .asset-card pre,
+    .export-area {
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: #f7f9f8;
+      color: #263530;
+      padding: 12px;
+      font-size: .85rem;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      margin: 0;
+    }
+
+    .asset-card pre {
+      max-height: 168px;
+    }
+
+    .relationship {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .relationship-box {
+      padding: 22px;
+      border-top-width: 6px;
+    }
+
+    .relationship-box.markdown {
+      border-top-color: var(--green);
+    }
+
+    .relationship-box.html {
+      border-top-color: var(--violet);
+    }
+
+    .relationship-box h3 {
+      margin-bottom: 8px;
+    }
+
+    .relationship-box p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .export-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      margin-top: 32px;
+      padding: 14px;
+      border: 1px solid rgba(216, 224, 220, .95);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 -16px 44px rgba(24, 33, 31, .10);
+      backdrop-filter: blur(12px);
+    }
+
+    .export-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .copy-status {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .export-area {
+      display: block;
+      width: 100%;
+      min-height: 132px;
+      resize: vertical;
+    }
+
+    .note {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 27px;
+      border-radius: 999px;
+      padding: .18rem .54rem;
+      font-size: .76rem;
+      font-weight: 750;
+      background: var(--quiet);
+      color: var(--muted);
+    }
+
+    .tag.fact {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .tag.proposal {
+      background: var(--blue-soft);
+      color: var(--blue);
+    }
+
+    .tag.unknown {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .mini-flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .mini-step {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfa;
+      padding: 12px;
+      min-height: 118px;
+      display: grid;
+      align-content: start;
+      gap: 7px;
+    }
+
+    .mini-step strong {
+      line-height: 1.2;
+    }
+
+    .mini-step span {
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .section-head,
+      .workspace,
+      .relationship {
+        grid-template-columns: 1fr;
+      }
+
+      .lanes,
+      .decision-grid,
+      .assets,
+      .mini-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .workspace {
+        gap: 12px;
+      }
+
+      .tab-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 34px;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 11.6vw, 3.18rem);
+        line-height: 1.03;
+      }
+
+      .before-after,
+      .lanes,
+      .decision-grid,
+      .assets,
+      .relationship,
+      .mini-flow,
+      .tab-list {
+        grid-template-columns: 1fr;
+      }
+
+      .turn {
+        grid-template-columns: 1fr;
+      }
+
+      .copy-status {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="shell hero-grid">
+      <div>
+        <p class="eyebrow">案例展示 / 可视化解释</p>
+        <h1>OPCSkill Collaboration Case</h1>
+        <p class="slogan">AI 的回答可以重来，人的判断不能丢。</p>
+        <p class="intro">多个 skill 协作，把一段 AI 对话转成可理解、可复用、可视化的公司资产：先理解，再编译，再沉淀，最后用 HTML 作为人的审查和思考工作台。</p>
+        <div class="hero-actions">
+          <button class="primary" data-jump="#workspace">查看互动工作台</button>
+          <button class="secondary" data-copy="summary">复制完整案例摘要</button>
+        </div>
+      </div>
+
+      <aside class="hero-panel flow-card" aria-label="OPCSkill collaboration flow">
+        <div class="flow-title">
+          <h2>从原始对话到下一轮 AI 资产</h2>
+          <span class="badge">offline / single file</span>
+        </div>
+        <svg class="flow-svg" viewBox="0 0 680 420" role="img" aria-label="原始对话到复用资产的流程图">
+          <defs>
+            <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 Z" fill="#6c7874"></path>
+            </marker>
+          </defs>
+          <rect x="30" y="48" width="160" height="74" rx="8" fill="#fff" stroke="#d8e0dc"></rect>
+          <text x="110" y="78" text-anchor="middle" font-size="19" font-weight="800" fill="#18211f">原始对话</text>
+          <text x="110" y="104" text-anchor="middle" font-size="14" fill="#66736f">命名与定位对话</text>
+
+          <rect x="260" y="28" width="160" height="58" rx="8" fill="#e6f2eb" stroke="#9bc6ad"></rect>
+          <text x="340" y="63" text-anchor="middle" font-size="18" font-weight="800" fill="#256a4d">理解</text>
+
+          <rect x="490" y="48" width="160" height="74" rx="8" fill="#e7f0f9" stroke="#9bb9d8"></rect>
+          <text x="570" y="78" text-anchor="middle" font-size="18" font-weight="800" fill="#2e5f8f">编译</text>
+          <text x="570" y="104" text-anchor="middle" font-size="14" fill="#66736f">提示 / 任务包</text>
+
+          <rect x="490" y="222" width="160" height="74" rx="8" fill="#fff1d8" stroke="#dfbf80"></rect>
+          <text x="570" y="252" text-anchor="middle" font-size="18" font-weight="800" fill="#9a6722">沉淀</text>
+          <text x="570" y="278" text-anchor="middle" font-size="14" fill="#66736f">Markdown 真源</text>
+
+          <rect x="260" y="244" width="160" height="58" rx="8" fill="#eee9f8" stroke="#bbb0d7"></rect>
+          <text x="340" y="279" text-anchor="middle" font-size="18" font-weight="800" fill="#6a529a">可视化</text>
+
+          <rect x="30" y="222" width="160" height="74" rx="8" fill="#fff" stroke="#d8e0dc"></rect>
+          <text x="110" y="252" text-anchor="middle" font-size="18" font-weight="800" fill="#18211f">复用</text>
+          <text x="110" y="278" text-anchor="middle" font-size="14" fill="#66736f">干净资产</text>
+
+          <path d="M190 85 C220 85 230 57 260 57" fill="none" stroke="#6c7874" stroke-width="2.4" marker-end="url(#arrow)"></path>
+          <path d="M420 57 C450 57 460 85 490 85" fill="none" stroke="#6c7874" stroke-width="2.4" marker-end="url(#arrow)"></path>
+          <path d="M570 122 L570 222" fill="none" stroke="#6c7874" stroke-width="2.4" marker-end="url(#arrow)"></path>
+          <path d="M490 259 C456 259 450 273 420 273" fill="none" stroke="#6c7874" stroke-width="2.4" marker-end="url(#arrow)"></path>
+          <path d="M260 273 C228 273 222 259 190 259" fill="none" stroke="#6c7874" stroke-width="2.4" marker-end="url(#arrow)"></path>
+
+          <text x="340" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#66736f">lijie</text>
+          <text x="470" y="180" text-anchor="middle" font-size="15" font-weight="700" fill="#66736f">token-prompt-compiler</text>
+          <text x="570" y="334" text-anchor="middle" font-size="15" font-weight="700" fill="#66736f">evaluation</text>
+          <text x="340" y="344" text-anchor="middle" font-size="15" font-weight="700" fill="#66736f">claude-code-html-skill</text>
+        </svg>
+        <p class="hero-note">这个 artifact 不是生产清洗工具，而是演示 OPCSkill 如何协调技能，把一个有价值的 AI 对话变成下一轮可用的资产。</p>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section class="shell" id="before-after">
+      <div class="section-head">
+        <h2>处理前 / 处理后</h2>
+        <p>同一段对话，未处理时只是聊天记录；经过 OPCSkill 协调后，它变成人可以审查、确认、复用的知识资产。</p>
+      </div>
+      <div class="before-after">
+        <article class="compare-box before">
+          <h3><span class="dot"></span>Before：散落的对话</h3>
+          <ul class="clean">
+            <li>对话散落在窗口里，下一次很难精确找回。</li>
+            <li>人的决策和模型建议混在一起，权威来源不清。</li>
+            <li>Prompt 和任务包无法复用，只能靠记忆重写。</li>
+            <li>下一轮 AI 需要重新解释背景，成本被反复支付。</li>
+          </ul>
+        </article>
+        <article class="compare-box after">
+          <h3><span class="dot"></span>After：可复用的资产</h3>
+          <ul class="clean">
+            <li>人的决策被标记和保留，进入 Decision Ledger。</li>
+            <li>概念结构被解释清楚，假设、机制、边界分离。</li>
+            <li>Prompt / Task Packet 被提取，下一轮可以直接使用。</li>
+            <li>Markdown 成为长期真源，HTML 成为可视化审查和理解工作台。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="band" id="skills">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Skill 协作地图</h2>
+          <p>OPCSkill 的价值不只是“保存 Markdown”，而是把已有技能编排成一个可解释的协作链。</p>
+        </div>
+        <div class="lanes">
+          <article class="lane lijie">
+            <h3><code>lijie</code></h3>
+            <p>理解结构 / concept map / first-principles decomposition</p>
+            <ul class="clean">
+              <li>提取核心问题</li>
+              <li>建立概念结构</li>
+              <li>分离假设、机制和约束</li>
+            </ul>
+          </article>
+          <article class="lane compiler">
+            <h3><code>token-prompt-compiler</code></h3>
+            <p>把对话编译成可交给下一轮 AI 的任务资产。</p>
+            <ul class="clean">
+              <li>生成可复用提示卡</li>
+              <li>生成执行任务包</li>
+              <li>加入验证器和停止规则</li>
+            </ul>
+          </article>
+          <article class="lane evaluation">
+            <h3><code>evaluation</code></h3>
+            <p>把可复用教训、决策记录和不确定性写入 Markdown。</p>
+            <ul class="clean">
+              <li>写出 Markdown 资产报告</li>
+              <li>保留可复用经验</li>
+              <li>分离已验证事实、推断和不确定性</li>
+            </ul>
+          </article>
+          <article class="lane html">
+            <h3><code>claude-code-html-skill</code></h3>
+            <p>把密集 Markdown 变成视觉工作台，让人审查、比较、导出。</p>
+            <ul class="clean">
+              <li>展示对照、证据、流程和导出</li>
+              <li>帮助人审查和思考</li>
+              <li>把确认后的内容导回 Markdown</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell" id="decision-gate">
+      <div class="section-head">
+        <h2>人类决策门</h2>
+        <p>这里把样例对话里的关键语句分成 <code class="inline">human</code>、<code class="inline">model_proposal</code>、<code class="inline">unknown</code>。只有被确认的人类判断，才应该进入长期决策账本。</p>
+      </div>
+      <div class="decision-tools">
+        <div class="filters" aria-label="Filter decision labels">
+          <button class="filter-btn active" data-filter="all">全部</button>
+          <button class="filter-btn" data-filter="human">人类决策</button>
+          <button class="filter-btn" data-filter="model_proposal">模型建议</button>
+          <button class="filter-btn" data-filter="unknown">未确认项</button>
+        </div>
+        <span class="badge" id="filter-count">显示 3 项</span>
+      </div>
+      <div class="decision-grid" id="decision-grid">
+        <article class="decision-card" data-kind="human">
+          <p class="kind"><span>人类决策</span><span class="tag fact">human</span></p>
+          <blockquote>“不如都叫 OPCSkill，作为外层 repo / collection name。”</blockquote>
+          <p class="reason">这是用户明确作出的命名与架构层级判断，权威高于模型建议。</p>
+          <span class="ledger yes">可进入决策账本</span>
+        </article>
+        <article class="decision-card" data-kind="model_proposal">
+          <p class="kind"><span>模型建议</span><span class="tag proposal">model_proposal</span></p>
+          <blockquote>“可以命名为 <code>founder-dialogue-compiler</code>。”</blockquote>
+          <p class="reason">这是模型提出的备选名称。它能作为被比较的证据，但不能自动成为事实。</p>
+          <span class="ledger no">不直接进入决策账本</span>
+        </article>
+        <article class="decision-card" data-kind="unknown">
+          <p class="kind"><span>未确认项</span><span class="tag unknown">unknown</span></p>
+          <blockquote>“未来可能加入更多 skill。”</blockquote>
+          <p class="reason">这是方向性意图，还没有完全定义技能边界、接口、维护规则。</p>
+          <span class="ledger no">先进入待确认问题</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="band" id="assets">
+      <div class="shell">
+        <div class="section-head">
+          <h2>资产输出预览</h2>
+          <p>每个技能都留下一个可复用输出。它们不是“聊天摘要”，而是下一轮 AI 可以读取、执行、验证的干净资产。</p>
+        </div>
+        <div class="assets">
+          <article class="asset-card">
+            <h3>决策账本</h3>
+            <pre>## 决策账本
+- 2026-06-16：使用 `OPCSkill` 作为外层 repo / collection name。
+  - 证据：用户认为 `founder-dialogue-compiler` 太窄，也不够有美感。
+  - 状态：已确认的人类决策。</pre>
+          </article>
+          <article class="asset-card">
+            <h3>概念地图</h3>
+            <pre>OPCSkill
+├─ 协调已有 skills
+├─ 保留人的判断
+├─ 把对话转成资产
+└─ 让 Markdown 成为长期真源</pre>
+          </article>
+          <article class="asset-card">
+            <h3>提示卡</h3>
+            <pre>目标：把一段有价值的 AI 对话转成干净资产。
+输入：原始对话、人类决策、模型建议。
+输出：决策账本 + 任务包 + 不确定性记录。</pre>
+          </article>
+          <article class="asset-card">
+            <h3>任务包</h3>
+            <pre>执行任务：
+1. 把证据标记为 human / model_proposal / unknown。
+2. 提取可复用 prompt。
+3. 写成 Markdown 资产记录。
+停止规则：不要虚构尚未实现的能力。</pre>
+          </article>
+          <article class="asset-card">
+            <h3>评估笔记</h3>
+            <pre>可复用经验：
+这个 artifact 必须保护人的判断，避免被压平成模型输出。
+不确定性：
+未来新增 skill 需要单独定义边界。</pre>
+          </article>
+          <article class="asset-card">
+            <h3>下一轮启动包</h3>
+            <pre>先读取已确认的 Markdown 资产。
+使用 `OPCSkill` 作为 collection frame。
+保留标签：human、model_proposal、unknown。
+把 unknown 变成决策前，必须先问人。</pre>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell" id="relationship">
+      <div class="section-head">
+        <h2>Markdown + HTML Relationship</h2>
+        <p>HTML 是工作台，不是长期记忆本身。RAG、eval 或 training 应读取确认后的干净资产，而不是原始聊天记录。</p>
+      </div>
+      <div class="relationship">
+        <article class="relationship-box markdown">
+          <h3>Markdown 是长期真源</h3>
+          <p>保存已确认的人类决策、可复用 prompt、任务包、评估笔记和 open questions。它适合版本管理、搜索、后续 agent 读取。</p>
+          <div class="pill-row">
+            <span class="tag fact">已确认决策</span>
+            <span class="tag fact">资产报告</span>
+            <span class="tag fact">下一轮上下文</span>
+          </div>
+        </article>
+        <article class="relationship-box html">
+          <h3>HTML 是可视化审查、思考和导出界面</h3>
+          <p>把密集 Markdown 变成对照、流程、证据卡片和轻量导出。人的判断在这里被看见、过滤、复制回 Markdown。</p>
+          <div class="pill-row">
+            <span class="tag proposal">对照比较</span>
+            <span class="tag proposal">流程工作台</span>
+            <span class="tag proposal">导出控制</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="band" id="workspace">
+      <div class="shell">
+        <div class="section-head">
+          <h2>互动演示控制台</h2>
+          <p>轻量但有用：切换视图、过滤标签、复制 Markdown。若本地文件无法访问剪贴板，下方 textarea 会显示可手动复制的内容。</p>
+        </div>
+        <div class="workspace">
+          <aside class="workspace-panel">
+            <div class="tab-list" role="tablist" aria-label="Case views">
+              <button class="tab-btn active" role="tab" aria-selected="true" data-tab="raw">原始对话</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="outputs">Skill 输出</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="visual">可视化工作台</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="markdown">Markdown 导出</button>
+            </div>
+          </aside>
+          <div class="workspace-panel">
+            <article class="tab-view active" id="tab-raw" role="tabpanel">
+              <h3>原始对话</h3>
+              <div class="conversation">
+                <div class="turn">
+                  <span class="speaker">助手</span>
+                  <p>“这个技能可以叫 <code>founder-dialogue-compiler</code>，强调把创始人和 AI 的高价值对话编译为资产。”</p>
+                </div>
+                <div class="turn">
+                  <span class="speaker">用户</span>
+                  <p>“这个名字没有美感，而且太窄。它不只是 founder dialogue。”</p>
+                </div>
+                <div class="turn">
+                  <span class="speaker">用户</span>
+                  <p>“不如都叫 OPCSkill，作为外层 repo / collection name。之后可以一个一个加入更多 skill。”</p>
+                </div>
+                <div class="turn">
+                  <span class="speaker">用户</span>
+                  <p>“我想保留人的决策、prompt、task packet，以及可以复用的思考资产。”</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="tab-view" id="tab-outputs" role="tabpanel">
+              <h3>Skill 输出</h3>
+              <div class="mini-flow">
+                <div class="mini-step">
+                  <strong><code>lijie</code></strong>
+                  <span>把“命名问题”拆成审美、范围、collection 架构、未来扩展四个概念节点。</span>
+                </div>
+                <div class="mini-step">
+                  <strong><code>token-prompt-compiler</code></strong>
+                  <span>生成 Prompt Card、Worker Task Packet、validator、stop rule，限制不要夸大能力。</span>
+                </div>
+                <div class="mini-step">
+                  <strong><code>evaluation</code></strong>
+                  <span>把事实、推断、不确定性分开写入 Markdown 资产报告。</span>
+                </div>
+                <div class="mini-step">
+                  <strong><code>claude-code-html-skill</code></strong>
+                  <span>把这些资产呈现成案例工作台，供人检查标签、复制导出。</span>
+                </div>
+                <div class="mini-step">
+                  <strong>Clean Assets</strong>
+                  <span>下一轮 AI 读取已确认 Markdown，而不是从原始聊天中重新猜。</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="tab-view" id="tab-visual" role="tabpanel">
+              <h3>可视化工作台</h3>
+              <p>这个页面把工作流变成几个可扫视的面：流程图看协作顺序，Before/After 看价值变化，Decision Gate 看权威标签，Asset Preview 看下一轮输出。</p>
+              <div class="pill-row">
+                <span class="tag fact">保留人的判断</span>
+                <span class="tag proposal">模型建议可比较</span>
+                <span class="tag unknown">未确认项不越界</span>
+              </div>
+              <blockquote style="margin-top:16px;">HTML 的职责不是替代 Markdown，而是让人更容易看见结构、证据和导出路径。</blockquote>
+            </article>
+
+            <article class="tab-view" id="tab-markdown" role="tabpanel">
+              <h3>Markdown 导出</h3>
+              <p>导出内容应写回 Markdown 资产，例如 <code>Decision Ledger</code>、<code>Prompt Card</code>、<code>Task Packet</code> 或下一轮启动说明。</p>
+              <pre id="markdown-preview">点击下方按钮生成可复制 Markdown。</pre>
+            </article>
+          </div>
+        </div>
+
+        <div class="export-bar" aria-label="Export controls">
+          <div class="export-actions">
+            <button class="primary" data-copy="ledger">复制决策账本 Markdown</button>
+            <button data-copy="prompt">复制提示卡</button>
+            <button data-copy="task">复制任务包</button>
+            <button data-copy="summary">复制完整案例摘要</button>
+            <span class="copy-status" id="copy-status">等待导出</span>
+          </div>
+          <textarea class="export-area" id="export-area" spellcheck="false" aria-label="导出内容备用文本框">复制按钮会把内容写到这里，作为本地 file:// 剪贴板限制时的备用复制区。</textarea>
+          <p class="note">边界：此案例不声称 OPCSkill 已经实现 full batch cleaning、RAG、training 或自动化生产流水线；它只展示技能协作如何把一次高价值对话变成可审查资产。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const exportsByKey = {
+      ledger: `## 决策账本
+
+- 日期：2026-06-16
+- 决策：使用 \`OPCSkill\` 作为外层 repo / collection name。
+- 标签：\`human\`
+- 证据："不如都叫 OPCSkill，作为外层 repo / collection name。"
+- 理由：用户认为 \`founder-dialogue-compiler\` 太窄，也不够有美感。
+- 状态：已确认
+
+## 不直接进入决策账本的内容
+
+- \`model_proposal\`：\`founder-dialogue-compiler\`
+  - 作为被比较的模型建议保留，不作为长期真源。
+- \`unknown\`：未来可能一个一个加入更多 skill。
+  - 先作为开放范围保留，等每个 skill 的边界清楚后再确认。`,
+
+      prompt: `# 提示卡：OPCSkill 对话资产编译
+
+## 目标
+把一段有价值的 AI 对话转成可复用资产，同时保留人的判断。
+
+## 输入
+- 原始对话摘录
+- 模型提出的候选建议
+- 用户明确表达的人类决策
+- 尚未完全定义的开放问题
+
+## 必须保留的标签
+- \`human\`：用户明确判断或决策
+- \`model_proposal\`：需要人审查的助手建议
+- \`unknown\`：面向未来、尚未充分定义的内容
+
+## 输出
+- 决策账本
+- 概念地图
+- 提示卡
+- 执行任务包
+- 评估笔记
+- 下一轮启动包
+
+## 停止规则
+除非已有实现证据，否则不要声称已经具备 batch cleaning、RAG、training 或自动化能力。`,
+
+      task: `# 执行任务包
+
+## 任务
+把 OPCSkill 的命名与定位对话转成干净的 Markdown 资产，并生成一个可视化审查界面。
+
+## 步骤
+1. 提取人类决策、模型建议和未确认项。
+2. 为每个标签保留直接证据引用。
+3. 把已确认的人类决策写成决策账本格式。
+4. 编译可复用的提示卡和任务包。
+5. 写出评估笔记，分离已验证事实、推断和不确定性。
+6. 渲染单个离线 HTML 案例展示，供人审查和导出。
+
+## 验证器
+- skill 名称保留英文。
+- 中文是主要 UI 语言。
+- Markdown 被描述为长期真源。
+- HTML 被描述为可视化审查、思考和导出界面。
+- 不包含私有数据、假 secret 或未被支持的能力声明。
+
+## 停止规则
+如果来源不能明确支持某个结论，就把它标成 \`unknown\`，不要升级成人类决策。`,
+
+      summary: `# OPCSkill 协作案例摘要
+
+核心句：AI 的回答可以重来，人的判断不能丢。
+
+这个案例展示 OPCSkill 如何协调已有 skills，把一段有价值的 AI 对话转成干净资产：
+
+1. 原始 AI 对话
+2. \`lijie\`：理解结构 / concept map / first-principles decomposition
+3. \`token-prompt-compiler\`：提示卡 / 任务包 / 验证器 / 停止规则
+4. \`evaluation\`：Markdown 报告 / 可复用经验 / 决策记录
+5. \`claude-code-html-skill\`：可视化工作台 / 对照 / 导出 / 人类审查
+6. 下一轮 AI 可读取的干净资产
+
+样例决策门：
+
+- \`human\`："不如都叫 OPCSkill，作为外层 repo / collection name。"
+- \`model_proposal\`："\`founder-dialogue-compiler\`"
+- \`unknown\`："未来可能加入更多 skill。"
+
+关系说明：
+
+- Markdown 是长期真源。
+- HTML 是可视化审查、思考和导出界面。
+- RAG、eval 或 training 应读取确认后的干净资产，而不是原始聊天。
+
+边界：
+这个案例不声称 OPCSkill 已经实现 full batch cleaning、RAG、training 或自动化生产流水线。`
+    };
+
+    const statusEl = document.getElementById('copy-status');
+    const exportArea = document.getElementById('export-area');
+    const markdownPreview = document.getElementById('markdown-preview');
+
+    function setExport(key) {
+      const text = exportsByKey[key] || exportsByKey.summary;
+      exportArea.value = text;
+      if (markdownPreview) {
+        markdownPreview.textContent = text;
+      }
+      return text;
+    }
+
+    async function copyText(key) {
+      const text = setExport(key);
+      try {
+        await navigator.clipboard.writeText(text);
+        statusEl.textContent = '已复制：' + labelFor(key);
+      } catch (err) {
+        exportArea.focus();
+        exportArea.select();
+        statusEl.textContent = '已写入 fallback textarea，请手动复制';
+      }
+    }
+
+    function labelFor(key) {
+      return {
+        ledger: '决策账本',
+        prompt: '提示卡',
+        task: '任务包',
+        summary: '完整案例摘要'
+      }[key] || '导出内容';
+    }
+
+    document.querySelectorAll('[data-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyText(button.dataset.copy));
+    });
+
+    document.querySelectorAll('[data-jump]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = document.querySelector(button.dataset.jump);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+    const tabViews = Array.from(document.querySelectorAll('.tab-view'));
+
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        tabButtons.forEach((item) => {
+          item.classList.toggle('active', item === button);
+          item.setAttribute('aria-selected', item === button ? 'true' : 'false');
+        });
+        tabViews.forEach((view) => {
+          view.classList.toggle('active', view.id === 'tab-' + button.dataset.tab);
+        });
+      });
+    });
+
+    const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
+    const decisionCards = Array.from(document.querySelectorAll('.decision-card'));
+    const filterCount = document.getElementById('filter-count');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach((item) => item.classList.toggle('active', item === button));
+        let visible = 0;
+        decisionCards.forEach((card) => {
+          const show = filter === 'all' || card.dataset.kind === filter;
+          card.hidden = !show;
+          if (show) visible += 1;
+        });
+        filterCount.textContent = '显示 ' + visible + ' 项';
+      });
+    });
+
+    setExport('summary');
+  </script>
+</body>
+</html>

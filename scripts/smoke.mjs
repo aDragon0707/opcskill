@@ -17,6 +17,7 @@ const requiredFiles = [
   "references/skill-collaboration-map.md",
   "references/learning-loop.md",
   "examples/dialogue-asset-example.md",
+  "examples/opcskill-collaboration-case.html",
   "tests/trigger-cases.json",
 ];
 
@@ -48,6 +49,7 @@ const assetSchema = readText("references/asset-schema.md");
 const collaborationMap = readText("references/skill-collaboration-map.md");
 const learningLoop = readText("references/learning-loop.md");
 const example = readText("examples/dialogue-asset-example.md");
+const htmlCase = readText("examples/opcskill-collaboration-case.html");
 const cases = JSON.parse(readText("tests/trigger-cases.json"));
 const packageJson = JSON.parse(readText("package.json"));
 
@@ -73,6 +75,9 @@ for (const phrase of [
   "Task Packet",
   "Next-Run Bootstrap",
   "Human Decision Gate",
+  "examples/opcskill-collaboration-case.html",
+  "Markdown + HTML",
+  "claude-code-html-skill",
   "mermaid",
 ]) {
   assert(readme.includes(phrase), `README includes ${phrase}`);
@@ -87,10 +92,11 @@ for (const asset of ["Decision Ledger", "Prompt Card", "Task Packet", "Knowledge
   assert(assetSchema.includes(asset), `asset schema includes ${asset}`);
 }
 
-for (const skillName of ["lijie", "token-prompt-compiler", "evaluation", "audit-evolution"]) {
+for (const skillName of ["lijie", "token-prompt-compiler", "evaluation", "audit-evolution", "claude-code-html-skill"]) {
   assert(collaborationMap.includes(skillName), `collaboration map mentions ${skillName}`);
 }
 assert(collaborationMap.includes("not available"), "collaboration map has fallback boundary");
+assert(collaborationMap.includes("HTML is a review"), "collaboration map keeps HTML as review layer");
 
 for (const boundary of ["Raw Sessions", "Clean Assets", "RAG", "Training Boundary"]) {
   assert(learningLoop.includes(boundary), `learning loop explains ${boundary}`);
@@ -98,6 +104,11 @@ for (const boundary of ["Raw Sessions", "Clean Assets", "RAG", "Training Boundar
 
 assert(example.includes("decided_by: human"), "example shows human decision");
 assert(example.includes("model"), "example keeps model context visible");
+assert(htmlCase.includes("OPCSkill Collaboration Case"), "HTML case has expected title");
+assert(htmlCase.includes("AI 的回答可以重来，人的判断不能丢"), "HTML case includes slogan");
+assert(htmlCase.includes("claude-code-html-skill"), "HTML case shows HTML skill collaboration");
+assert(htmlCase.includes("Markdown 是长期真源"), "HTML case keeps Markdown as source of truth");
+assert(!/https?:\/\/|<script\s+src=|<link\s+rel=/i.test(htmlCase), "HTML case is offline self-contained");
 
 assert(Array.isArray(cases.should_trigger), "trigger cases include should_trigger");
 assert(Array.isArray(cases.should_not_trigger), "trigger cases include should_not_trigger");
@@ -111,4 +122,3 @@ if (process.exitCode) {
 }
 
 console.log("opcskill smoke ok");
-
