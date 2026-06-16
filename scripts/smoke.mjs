@@ -15,6 +15,7 @@ const requiredFiles = [
   "references/human-decision-gate.md",
   "references/asset-schema.md",
   "references/execution-protocol.md",
+  "references/human-thinking-layer.md",
   "references/skill-collaboration-map.md",
   "references/learning-loop.md",
   "references/retention-gate.md",
@@ -49,6 +50,7 @@ const skill = readText("SKILL.md");
 const decisionGate = readText("references/human-decision-gate.md");
 const assetSchema = readText("references/asset-schema.md");
 const executionProtocol = readText("references/execution-protocol.md");
+const humanThinkingLayer = readText("references/human-thinking-layer.md");
 const collaborationMap = readText("references/skill-collaboration-map.md");
 const learningLoop = readText("references/learning-loop.md");
 const retentionGate = readText("references/retention-gate.md");
@@ -68,6 +70,7 @@ for (const reference of [
   "references/human-decision-gate.md",
   "references/asset-schema.md",
   "references/execution-protocol.md",
+  "references/human-thinking-layer.md",
   "references/skill-collaboration-map.md",
   "references/learning-loop.md",
   "references/retention-gate.md",
@@ -78,6 +81,10 @@ for (const reference of [
 for (const phrase of [
   "Input Classifier",
   "Worth-Keeping Gate",
+  "Human Thinking Gate",
+  "Thought Breakpoints",
+  "User Problem-Solving Pattern",
+  "Human Layer before Machine Layer",
   "evaluation-grade quality gate",
   "downgrade to receipt",
   "raw_conversation",
@@ -142,6 +149,9 @@ for (const phrase of [
   "full_asset",
   "visual_export_plan",
   "Worth-Keeping Gate",
+  "Human Thinking Gate",
+  "Thought Breakpoints",
+  "Human Layer before Machine Layer",
   "Evaluation-Grade Quality Gate",
   "downgrade to receipt",
 ]) {
@@ -150,6 +160,19 @@ for (const phrase of [
 
 for (const phrase of ["keep", "redact", "discard", "ask_user", "[REDACTED_SECRET]"]) {
   assert(retentionGate.includes(phrase), `retention gate defines ${phrase}`);
+}
+
+for (const phrase of [
+  "Human Thinking Gate",
+  "Thought Breakpoints",
+  "before",
+  "break",
+  "repair_action",
+  "after",
+  "User Problem-Solving Pattern",
+  "Human Layer before Machine Layer",
+]) {
+  assert(humanThinkingLayer.includes(phrase), `human thinking layer defines ${phrase}`);
 }
 
 for (const skillName of ["lijie", "token-prompt-compiler", "evaluation", "audit-evolution", "claude-code-html-skill"]) {
@@ -184,6 +207,7 @@ for (const id of [
   "visual-export-request",
   "accepted-model-proposal",
   "low-signal-thread",
+  "thinking-breakpoint-learning",
 ]) {
   assert(cases.should_trigger.some((testCase) => testCase.id === id), `trigger cases include ${id}`);
 }
@@ -198,11 +222,17 @@ for (const required of ["Worth-Keeping Gate", "low asset value", "downgrade to r
   assert(lowSignalCase?.must_include?.includes(required), `low-signal-thread requires ${required}`);
 }
 
+const thinkingBreakpointCase = cases.should_trigger.find((testCase) => testCase.id === "thinking-breakpoint-learning");
+for (const required of ["Human Thinking Gate", "Thought Breakpoints", "repair_action", "User Problem-Solving Pattern", "Human Layer before Machine Layer"]) {
+  assert(thinkingBreakpointCase?.must_include?.includes(required), `thinking-breakpoint-learning requires ${required}`);
+}
+
 const publicDocs = [
   ["SKILL.md", skill],
   ["references/asset-schema.md", assetSchema],
   ["references/human-decision-gate.md", decisionGate],
   ["references/execution-protocol.md", executionProtocol],
+  ["references/human-thinking-layer.md", humanThinkingLayer],
   ["references/retention-gate.md", retentionGate],
   ["tests/trigger-cases.json", JSON.stringify(cases)],
 ];

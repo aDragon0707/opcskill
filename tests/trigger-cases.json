@@ -44,6 +44,11 @@
       "id": "low-signal-thread",
       "input": "Use OPCSkill to inspect this mostly repetitive Codex thread. If it has no real human decision, reusable lesson, prompt, task packet, or next action, do not force a full asset.",
       "must_include": ["Worth-Keeping Gate", "low asset value", "downgrade to receipt"]
+    },
+    {
+      "id": "thinking-breakpoint-learning",
+      "input": "使用 OPCSkill 整理这段学习对话：我一开始以为 micrograd 卡在数学，后来发现真正卡在 Python 对象模型。我删掉 __repr__ 跑了一轮，看到默认内存地址，才理解 repr 是显示层，不是存储机制。请不要只给机器读的表格，要先写给人看的复盘，再给决策账本和任务包。",
+      "must_include": ["Human Thinking Gate", "Thought Breakpoints", "repair_action", "User Problem-Solving Pattern", "Human Layer before Machine Layer"]
     }
   ],
   "should_not_trigger": [

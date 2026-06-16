@@ -47,12 +47,36 @@ worth_keeping_gate:
 
 Do not turn a weak transcript into a full asset by filling the schema with generic text.
 
+## Human Thinking Gate
+
+Run this after Worth-Keeping Gate and before machine-readable extraction.
+
+```yaml
+human_thinking_gate:
+  pass_when:
+    - user original understanding is visible
+    - user confusion, objection, reversal, or self-explanation is visible
+    - user repair action is visible
+    - reusable human method can be extracted
+  downgrade_to_receipt_when:
+    - only task output is visible
+    - only model suggestions are visible
+    - no thought breakpoint can be supported by evidence
+  ask_user_when:
+    - the result looks valuable but the user's thinking movement is unclear
+```
+
+For `full_asset`, preserve Thought Breakpoints and User Problem-Solving Pattern before decision ledger or task packet.
+
 ## Evaluation-Grade Quality Gate
 
 Use this gate for Obsidian Markdown, learning assets, durable reports, or quality/evidence audits.
 
 A durable Markdown asset should include:
 
+- Human Layer before Machine Layer;
+- thought breakpoints;
+- user problem-solving pattern;
 - conversation map;
 - turning points;
 - logic conflicts or judgment points;
@@ -68,6 +92,9 @@ If these cannot be extracted from the source, downgrade to receipt and label the
 ```text
 classify input
 -> Worth-Keeping Gate
+-> Human Thinking Gate
+-> Thought Breakpoints
+-> User Problem-Solving Pattern
 -> safety audit
 -> choose output mode
 -> extract signals
@@ -87,6 +114,7 @@ For reports, evaluation notes, and synthesis notes:
 - Mark uncertain claims as `unknown`.
 - Package for next use: prompt cards, task packets, next-run bootstrap, or visual export hints.
 - If it is already thin or low signal, produce an audit receipt instead of rewriting it as another long report.
+- If it contains human reflection, write a human-readable layer first and keep the machine layer second.
 
 ## Batch Boundary
 
