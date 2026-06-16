@@ -2,7 +2,7 @@
 
 > AI 的回答可以重来，人的判断不能丢。
 
-OPCSkill 是一个面向一人公司和高强度 AI 协作者的 skill。它不只是总结聊天记录，而是把散落在 Codex、Claude、ChatGPT 窗口里的关键对话，整理成你自己拥有、可以复用、可以继续训练自己的学习资产。
+OPCSkill 是一个面向一人公司和高强度 AI 协作者的 skill。它不只是总结聊天记录，而是把散落在 Codex、Claude、ChatGPT 窗口里的关键对话，整理成你自己拥有、可以复用、可以持续迭代的学习资产。
 
 它的核心产出不是一段“摘要”，而是一组可继续使用的资产：
 
@@ -98,7 +98,7 @@ OPCSkill 的长期真源应该是 Markdown。HTML 是可视化工作台，不是
 | Markdown 资产层 | 保存决策账本、Prompt Card、Task Packet、评估笔记、下一轮启动包 | 不追求花哨展示 |
 | HTML 工作台层 | 把密集 Markdown 转成流程图、对照卡片、筛选视图和导出界面 | 不替代长期记忆，不直接宣称训练完成 |
 
-已经生成的可视化案例可以作为 README demo：
+已经生成的可视化案例可以作为 README demo。GitHub 网页会先显示 HTML 源码；要看交互效果，请下载或 clone 后在本地浏览器打开：
 
 - [examples/opcskill-collaboration-case.html](examples/opcskill-collaboration-case.html)
 
