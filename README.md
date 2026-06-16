@@ -160,6 +160,8 @@ flowchart LR
 
 这些是可选协作 skill，不是 OPCSkill 的硬依赖。如果这些 skill 不存在，OPCSkill 会使用内置的简化流程。
 
+换句话说：OPCSkill 可以独立运行；其他协作 skill 只是可选加速器。
+
 ## 快速使用
 
 ```text
