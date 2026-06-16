@@ -21,14 +21,53 @@ Default mode is `full_asset`.
 ```yaml
 output_mode:
   full_asset: default for valuable conversations and selected samples
-  receipt: quick closeout only
+  receipt: quick closeout or low reusable value after Worth-Keeping Gate
   visual_export_plan: for HTML or visual artifacts
 ```
+
+## Worth-Keeping Gate
+
+Run this before writing a full asset.
+
+```yaml
+worth_keeping_gate:
+  full_asset_when:
+    - explicit human decision, rejection, preference, or tradeoff
+    - cognitive turning point or corrected misunderstanding
+    - reusable prompt, task packet, validator, checklist, or workflow
+    - evidence for why one option was chosen over another
+    - next-run bootstrap, open loop, or future action
+  downgrade_to_receipt_when:
+    - mostly chronological chat
+    - mostly duplicated model output
+    - mostly raw tool logs
+    - no clear human decision or reusable lesson
+    - no future action or reuse path
+```
+
+Do not turn a weak transcript into a full asset by filling the schema with generic text.
+
+## Evaluation-Grade Quality Gate
+
+Use this gate for Obsidian Markdown, learning assets, durable reports, or quality/evidence audits.
+
+A durable Markdown asset should include:
+
+- conversation map;
+- turning points;
+- logic conflicts or judgment points;
+- reusable lessons;
+- better prompts or task packets;
+- correctness and privacy risks;
+- final condensed version or next-run bootstrap.
+
+If these cannot be extracted from the source, downgrade to receipt and label the thread as low asset value instead of producing a thin report.
 
 ## Execution Chain
 
 ```text
 classify input
+-> Worth-Keeping Gate
 -> safety audit
 -> choose output mode
 -> extract signals
@@ -47,6 +86,7 @@ For reports, evaluation notes, and synthesis notes:
 - Preserve useful structure.
 - Mark uncertain claims as `unknown`.
 - Package for next use: prompt cards, task packets, next-run bootstrap, or visual export hints.
+- If it is already thin or low signal, produce an audit receipt instead of rewriting it as another long report.
 
 ## Batch Boundary
 

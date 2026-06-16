@@ -39,6 +39,11 @@
       "id": "accepted-model-proposal",
       "input": "助手提出：可以把 OPCSkill 定位成一人公司的 AI 对话资产化入口。用户回答：对，但公开文案之后再确认。请整理成资产，区分谁接受了决策、这个提案最早来自哪里。",
       "must_include": ["decided_by: human", "proposal_origin: model_proposal", "ask_user", "public wording"]
+    },
+    {
+      "id": "low-signal-thread",
+      "input": "Use OPCSkill to inspect this mostly repetitive Codex thread. If it has no real human decision, reusable lesson, prompt, task packet, or next action, do not force a full asset.",
+      "must_include": ["Worth-Keeping Gate", "low asset value", "downgrade to receipt"]
     }
   ],
   "should_not_trigger": [

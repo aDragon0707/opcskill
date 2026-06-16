@@ -77,6 +77,9 @@ for (const reference of [
 
 for (const phrase of [
   "Input Classifier",
+  "Worth-Keeping Gate",
+  "evaluation-grade quality gate",
+  "downgrade to receipt",
   "raw_conversation",
   "already_synthesized_asset",
   "prompt_archive",
@@ -138,6 +141,9 @@ for (const phrase of [
   "visual_export_request",
   "full_asset",
   "visual_export_plan",
+  "Worth-Keeping Gate",
+  "Evaluation-Grade Quality Gate",
+  "downgrade to receipt",
 ]) {
   assert(executionProtocol.includes(phrase), `execution protocol defines ${phrase}`);
 }
@@ -177,6 +183,7 @@ for (const id of [
   "multi-session-request",
   "visual-export-request",
   "accepted-model-proposal",
+  "low-signal-thread",
 ]) {
   assert(cases.should_trigger.some((testCase) => testCase.id === id), `trigger cases include ${id}`);
 }
@@ -184,6 +191,11 @@ for (const id of [
 const acceptedProposalCase = cases.should_trigger.find((testCase) => testCase.id === "accepted-model-proposal");
 for (const required of ["decided_by: human", "proposal_origin: model_proposal", "ask_user", "public wording"]) {
   assert(acceptedProposalCase?.must_include?.includes(required), `accepted-model-proposal requires ${required}`);
+}
+
+const lowSignalCase = cases.should_trigger.find((testCase) => testCase.id === "low-signal-thread");
+for (const required of ["Worth-Keeping Gate", "low asset value", "downgrade to receipt"]) {
+  assert(lowSignalCase?.must_include?.includes(required), `low-signal-thread requires ${required}`);
 }
 
 const publicDocs = [
