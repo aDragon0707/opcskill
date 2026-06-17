@@ -87,6 +87,17 @@ flowchart LR
 | OPCSkill 命名与扩展边界 | 用户否定 `founder-dialogue-compiler`，确认外层品牌用 `OPCSkill`，因为后续可能加入不止一个 skill | Human decision、rejected option、Prompt Card、Task Packet、Next-Run Bootstrap | [examples/dialogue-asset-example.md](examples/dialogue-asset-example.md) |
 | Hotel A Founder Decision Ledger | 创始人需要把混乱想法、业务判断、AI 协作过程整理成可复用的决策资产 | 五步协作闭环、协作轨迹包、retention review、do-not-claim 边界 | [examples/hotel-a-founder-decision-ledger/](examples/hotel-a-founder-decision-ledger/) |
 
+Hotel A demo 不是一张概念图，而是一组可以逐个打开的实战产物。每个文件展示一个 skill 在协作链路里的具体位置：
+
+| 文件 | 角色 | 对应 skill |
+|---|---|---|
+| [00-source-inventory.zh.md](examples/hotel-a-founder-decision-ledger/00-source-inventory.zh.md) | 样本来源索引，说明用了哪些材料、哪些不能公开 | `OPCSkill`、`audit-evolution` |
+| [01-redacted-demo-source.zh.md](examples/hotel-a-founder-decision-ledger/01-redacted-demo-source.zh.md) | 公开安全的源材料摘录 | `OPCSkill` |
+| [02-dialogue-asset-founder-decision-ledger.zh.md](examples/hotel-a-founder-decision-ledger/02-dialogue-asset-founder-decision-ledger.zh.md) | 核心 Markdown 资产，长期真源 | `OPCSkill`、`evaluation` |
+| [03-readme-demo-section.zh.md](examples/hotel-a-founder-decision-ledger/03-readme-demo-section.zh.md) | README 里的 3 分钟案例说明 | `evaluation`、`lijie` |
+| [04-visual-export-plan.zh.md](examples/hotel-a-founder-decision-ledger/04-visual-export-plan.zh.md) | 给 HTML skill 的视觉导出任务书 | `token-prompt-compiler`、`claude-code-html-skill` |
+| `private-source-map.local.zh.md` | 本地私有证据映射，不发布 | `OPCSkill`、`audit-evolution` |
+
 这两个案例分别展示了两种实战场景：一个是产品命名和边界决策，一个是真实业务项目里的创始人决策资产化。它们不是为了证明某个模型回答得好，而是证明 OPCSkill 能把人的判断、取舍、证据和下一轮复用路径保存下来。
 
 组合使用时，OPCSkill 不是替代这些 skill，而是保存它们之间的协作轨迹包：每一阶段输入了什么、产出了什么、哪些内容被确认、哪些内容需要保留或脱敏、下一轮应该从哪里继续。

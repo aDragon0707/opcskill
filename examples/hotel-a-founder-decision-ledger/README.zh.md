@@ -32,6 +32,17 @@ flowchart LR
 
 这个 trace 说明每个 skill 的输入、动作、输出，以及 OPCSkill 最终保留什么。
 
+## 实战产物
+
+| 文件 | 角色 | 对应 skill |
+|---|---|---|
+| [00-source-inventory.zh.md](00-source-inventory.zh.md) | 样本来源索引，说明用了哪些材料、哪些不能公开 | `OPCSkill`、`audit-evolution` |
+| [01-redacted-demo-source.zh.md](01-redacted-demo-source.zh.md) | 公开安全的源材料摘录 | `OPCSkill` |
+| [02-dialogue-asset-founder-decision-ledger.zh.md](02-dialogue-asset-founder-decision-ledger.zh.md) | 核心 Markdown 资产，长期真源 | `OPCSkill`、`evaluation` |
+| [03-readme-demo-section.zh.md](03-readme-demo-section.zh.md) | README 里的 3 分钟案例说明 | `evaluation`、`lijie` |
+| [04-visual-export-plan.zh.md](04-visual-export-plan.zh.md) | 给 HTML skill 的视觉导出任务书 | `token-prompt-compiler`、`claude-code-html-skill` |
+| `private-source-map.local.zh.md` | 本地私有证据映射，不发布 | `OPCSkill`、`audit-evolution` |
+
 ## 边界
 
 - Markdown 是长期真源。

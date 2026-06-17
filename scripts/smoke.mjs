@@ -20,6 +20,11 @@ const requiredFiles = [
   "references/learning-loop.md",
   "references/retention-gate.md",
   "examples/dialogue-asset-example.md",
+  "examples/hotel-a-founder-decision-ledger/00-source-inventory.zh.md",
+  "examples/hotel-a-founder-decision-ledger/01-redacted-demo-source.zh.md",
+  "examples/hotel-a-founder-decision-ledger/02-dialogue-asset-founder-decision-ledger.zh.md",
+  "examples/hotel-a-founder-decision-ledger/03-readme-demo-section.zh.md",
+  "examples/hotel-a-founder-decision-ledger/04-visual-export-plan.zh.md",
   "examples/hotel-a-founder-decision-ledger/README.zh.md",
   "examples/hotel-a-founder-decision-ledger/collaboration-trace.zh.md",
   "examples/opcskill-collaboration-case.html",
@@ -61,6 +66,11 @@ const collaborationMap = readText("references/skill-collaboration-map.md");
 const learningLoop = readText("references/learning-loop.md");
 const retentionGate = readText("references/retention-gate.md");
 const example = readText("examples/dialogue-asset-example.md");
+const hotelSourceInventory = readText("examples/hotel-a-founder-decision-ledger/00-source-inventory.zh.md");
+const hotelRedactedSource = readText("examples/hotel-a-founder-decision-ledger/01-redacted-demo-source.zh.md");
+const hotelDialogueAsset = readText("examples/hotel-a-founder-decision-ledger/02-dialogue-asset-founder-decision-ledger.zh.md");
+const hotelReadmeSection = readText("examples/hotel-a-founder-decision-ledger/03-readme-demo-section.zh.md");
+const hotelVisualExportPlan = readText("examples/hotel-a-founder-decision-ledger/04-visual-export-plan.zh.md");
 const hotelDemoReadme = readText("examples/hotel-a-founder-decision-ledger/README.zh.md");
 const collaborationTrace = readText("examples/hotel-a-founder-decision-ledger/collaboration-trace.zh.md");
 const htmlCase = readText("examples/opcskill-collaboration-case.html");
@@ -132,6 +142,12 @@ for (const phrase of [
   "实战案例（公开安全版本）",
   "OPCSkill 命名与扩展边界",
   "Hotel A Founder Decision Ledger",
+  "00-source-inventory.zh.md",
+  "01-redacted-demo-source.zh.md",
+  "02-dialogue-asset-founder-decision-ledger.zh.md",
+  "03-readme-demo-section.zh.md",
+  "04-visual-export-plan.zh.md",
+  "private-source-map.local.zh.md",
   "协作轨迹包",
   "examples/dialogue-asset-example.md",
   "examples/hotel-a-founder-decision-ledger/",
@@ -211,6 +227,12 @@ assert(example.includes("decided_by: human"), "example shows human decision");
 assert(example.includes("model"), "example keeps model context visible");
 assert(example.includes("source_kind:"), "example shows source_kind");
 assert(example.includes("retention_review:"), "example shows retention review");
+assert(!exists("examples/hotel-a-founder-decision-ledger/private-source-map.local.zh.md"), "private source map is not committed");
+assert(hotelSourceInventory.includes("demo_theme"), "hotel source inventory has demo theme");
+assert(hotelRedactedSource.includes("redaction_level"), "hotel redacted source marks redaction level");
+assert(hotelDialogueAsset.includes("dialogue_asset"), "hotel dialogue asset has dialogue_asset");
+assert(hotelReadmeSection.includes("README Demo"), "hotel README section is present");
+assert(hotelVisualExportPlan.includes("visual_export_plan"), "hotel visual export plan is present");
 for (const phrase of ["五步协作闭环", "协作轨迹包", "Markdown 是长期真源"]) {
   assert(hotelDemoReadme.includes(phrase), `hotel demo README includes ${phrase}`);
 }
