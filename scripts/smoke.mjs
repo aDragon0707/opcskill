@@ -20,6 +20,8 @@ const requiredFiles = [
   "references/learning-loop.md",
   "references/retention-gate.md",
   "examples/dialogue-asset-example.md",
+  "examples/hotel-a-founder-decision-ledger/README.zh.md",
+  "examples/hotel-a-founder-decision-ledger/collaboration-trace.zh.md",
   "examples/opcskill-collaboration-case.html",
   "tests/trigger-cases.json",
 ];
@@ -45,6 +47,10 @@ for (const file of requiredFiles) {
   assert(exists(file), `${file} exists`);
 }
 
+if (process.exitCode) {
+  process.exit(process.exitCode);
+}
+
 const readme = readText("README.md");
 const skill = readText("SKILL.md");
 const decisionGate = readText("references/human-decision-gate.md");
@@ -55,6 +61,8 @@ const collaborationMap = readText("references/skill-collaboration-map.md");
 const learningLoop = readText("references/learning-loop.md");
 const retentionGate = readText("references/retention-gate.md");
 const example = readText("examples/dialogue-asset-example.md");
+const hotelDemoReadme = readText("examples/hotel-a-founder-decision-ledger/README.zh.md");
+const collaborationTrace = readText("examples/hotel-a-founder-decision-ledger/collaboration-trace.zh.md");
 const htmlCase = readText("examples/opcskill-collaboration-case.html");
 const cases = JSON.parse(readText("tests/trigger-cases.json"));
 const packageJson = JSON.parse(readText("package.json"));
@@ -120,6 +128,13 @@ for (const phrase of [
   "https://github.com/aDragon0707/audit-evolution-agent-flight-recorder",
   "https://github.com/aDragon0707/claude-code-html-skill",
   "planned public repo / local for now",
+  "五步协作闭环",
+  "实战案例（公开安全版本）",
+  "OPCSkill 命名与扩展边界",
+  "Hotel A Founder Decision Ledger",
+  "协作轨迹包",
+  "examples/dialogue-asset-example.md",
+  "examples/hotel-a-founder-decision-ledger/",
 ]) {
   assert(readme.includes(phrase), `README includes ${phrase}`);
 }
@@ -178,6 +193,13 @@ for (const phrase of [
 for (const skillName of ["lijie", "token-prompt-compiler", "evaluation", "audit-evolution", "claude-code-html-skill"]) {
   assert(collaborationMap.includes(skillName), `collaboration map mentions ${skillName}`);
 }
+for (const phrase of [
+  "OPCSkill is the connective layer",
+  "Human messy idea",
+  "Do not make OPCSkill replace companion skills",
+]) {
+  assert(collaborationMap.includes(phrase), `collaboration map defines five-step role: ${phrase}`);
+}
 assert(collaborationMap.includes("not available"), "collaboration map has fallback boundary");
 assert(collaborationMap.includes("HTML is a review"), "collaboration map keeps HTML as review layer");
 
@@ -189,6 +211,21 @@ assert(example.includes("decided_by: human"), "example shows human decision");
 assert(example.includes("model"), "example keeps model context visible");
 assert(example.includes("source_kind:"), "example shows source_kind");
 assert(example.includes("retention_review:"), "example shows retention review");
+for (const phrase of ["五步协作闭环", "协作轨迹包", "Markdown 是长期真源"]) {
+  assert(hotelDemoReadme.includes(phrase), `hotel demo README includes ${phrase}`);
+}
+for (const phrase of [
+  "lijie",
+  "token-prompt-compiler",
+  "evaluation",
+  "audit-evolution",
+  "claude-code-html-skill",
+  "OPCSkill",
+  "human_decision",
+  "do_not_claim",
+]) {
+  assert(collaborationTrace.includes(phrase), `collaboration trace includes ${phrase}`);
+}
 assert(htmlCase.includes("OPCSkill Collaboration Case"), "HTML case has expected title");
 assert(htmlCase.includes("AI 的回答可以重来，人的判断不能丢"), "HTML case includes slogan");
 assert(htmlCase.includes("claude-code-html-skill"), "HTML case shows HTML skill collaboration");
@@ -208,6 +245,7 @@ for (const id of [
   "accepted-model-proposal",
   "low-signal-thread",
   "thinking-breakpoint-learning",
+  "five-step-skill-stack",
 ]) {
   assert(cases.should_trigger.some((testCase) => testCase.id === id), `trigger cases include ${id}`);
 }

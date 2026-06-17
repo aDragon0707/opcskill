@@ -37,37 +37,61 @@ flowchart LR
 
 一句话：OPCSkill 先把对话变成可信资产，再让这些资产进入下一轮 AI 协作。
 
-## OPCSkill Stack：组合使用时的完整闭环
+## 五步协作闭环：人类发起，Skill 协作，OPCSkill 汇总
 
-OPCSkill 可以独立运行；但当它和理解、Prompt 编译、评估、复盘、可视化这些 companion skills 组合使用时，会形成完整的人机学习资产闭环。
+OPCSkill 可以独立运行；但它真正适合做的是一人公司 Skill Stack 的汇总层、连接层和资产路由层。主线不是“AI worklog 很多”，而是人类先发起工作：想法混乱、目标不清、任务需要执行、执行后又产生了值得保存的思考资产。
+
+五个 companion skills 各自处理一个阶段，OPCSkill 把这些阶段的输入、输出、证据、决策和下一轮接续统一整理成资产。
 
 ```mermaid
 flowchart LR
-  A["人的真实困惑 / 想法 / 任务<br/>Human Confusion / Intent"] --> B["lijie / understanding<br/>理解概念结构<br/>Concept Structure"]
+  A["人的混乱想法 / 真实困惑<br/>Human messy idea"] --> B["lijie / understanding<br/>梳理概念结构<br/>Concept Structure"]
 
-  B --> C["token-prompt-compiler<br/>编译 Prompt / Task Packet<br/>Executable Task Contract"]
+  B --> C["token-prompt-compiler<br/>转换为 Prompt / Task Packet<br/>Executable Contract"]
 
-  C --> D["AI Session<br/>Codex / Claude / ChatGPT<br/>对话、执行、探索"]
+  C --> D["AI Session<br/>Codex / Claude / ChatGPT<br/>执行、对话、博弈"]
 
-  D --> E["OPCSkill<br/>主入口与资产路由器<br/>Human Thinking Asset Router"]
+  D --> E["evaluation<br/>保存人机交互后的思考资产<br/>Obsidian Markdown"]
 
-  E --> F["Human Layer<br/>人的思维资产<br/>断点 / 决策 / 破局方式"]
+  E --> F["audit-evolution<br/>多窗口 / 长任务 / 接续<br/>Next-run Continuity"]
 
-  E --> G["Machine Layer<br/>Agent 可接续资产<br/>Decision Ledger / Prompt Card / Task Packet"]
+  E --> G["claude-code-html-skill<br/>Markdown 转可视化资产<br/>HTML Review Surface"]
 
-  F --> H["evaluation<br/>Markdown 报告 / 证据审查<br/>Human-readable Report"]
+  B --> H["OPCSkill<br/>汇总层 / 连接层 / 资产路由<br/>Collaboration Trace"]
+  C --> H
+  D --> H
+  E --> H
+  F --> H
+  G --> H
 
-  G --> I["audit-evolution<br/>复盘 / 纠偏 / 下一轮接续<br/>Next-run Bootstrap"]
-
-  H --> J["claude-code-html-skill<br/>可视化审查界面<br/>HTML Review Surface"]
+  H --> I["Human Layer<br/>人的思维资产<br/>断点 / 决策 / 破局方式"]
+  H --> J["Machine Layer<br/>Agent 可接续资产<br/>Decision Ledger / Prompt Card / Task Packet"]
 
   I --> K["下一轮更好的 AI 协作<br/>Better Next AI Run"]
   J --> K
-
   K --> A
 ```
 
-单独使用时，OPCSkill 能把一段对话沉淀成 Human Layer 和 Machine Layer；组合使用时，它会成为 Skill Stack 的主入口，把人的困惑、Prompt、任务、对话、复盘和可视化串成一条可复利的学习与执行循环。
+| 阶段 | Skill | 负责什么 | OPCSkill 汇总什么 |
+|---|---|---|---|
+| 1 | `lijie` | 帮人把混乱想法梳理成概念结构 | 原始困惑、结构化理解、未解决问题 |
+| 2 | `token-prompt-compiler` | 把理解转换成可执行 Prompt / Task Packet | 任务边界、验证方式、stop rules |
+| 3 | `evaluation` | 保存人和 AI 交互博弈后的思考资产 | Human Layer、证据、思维断点、可复用经验 |
+| 4 | `audit-evolution` | 支持多窗口、长任务、复盘和接续 | next-run bootstrap、风险、连续性记录 |
+| 5 | `claude-code-html-skill` | 把 Markdown 真源转成可视化审查界面 | HTML 只作为 review/export surface 的边界 |
+
+### 实战案例（公开安全版本）
+
+| 案例 | 真实问题 | 穿过闭环后得到什么 | 入口 |
+|---|---|---|---|
+| OPCSkill 命名与扩展边界 | 用户否定 `founder-dialogue-compiler`，确认外层品牌用 `OPCSkill`，因为后续可能加入不止一个 skill | Human decision、rejected option、Prompt Card、Task Packet、Next-Run Bootstrap | [examples/dialogue-asset-example.md](examples/dialogue-asset-example.md) |
+| Hotel A Founder Decision Ledger | 创始人需要把混乱想法、业务判断、AI 协作过程整理成可复用的决策资产 | 五步协作闭环、协作轨迹包、retention review、do-not-claim 边界 | [examples/hotel-a-founder-decision-ledger/](examples/hotel-a-founder-decision-ledger/) |
+
+这两个案例分别展示了两种实战场景：一个是产品命名和边界决策，一个是真实业务项目里的创始人决策资产化。它们不是为了证明某个模型回答得好，而是证明 OPCSkill 能把人的判断、取舍、证据和下一轮复用路径保存下来。
+
+组合使用时，OPCSkill 不是替代这些 skill，而是保存它们之间的协作轨迹包：每一阶段输入了什么、产出了什么、哪些内容被确认、哪些内容需要保留或脱敏、下一轮应该从哪里继续。
+
+公开示例见：[examples/hotel-a-founder-decision-ledger/](examples/hotel-a-founder-decision-ledger/)。
 
 ## Human Layer + Machine Layer
 
@@ -152,14 +176,15 @@ OPCSkill 的长期真源应该是 Markdown。HTML 是可视化工作台，不是
 已经生成的可视化案例可以作为 README demo。GitHub 网页会先显示 HTML 源码；要看交互效果，请下载或 clone 后在本地浏览器打开：
 
 - [examples/opcskill-collaboration-case.html](examples/opcskill-collaboration-case.html)
+- [examples/hotel-a-founder-decision-ledger/collaboration-trace.zh.md](examples/hotel-a-founder-decision-ledger/collaboration-trace.zh.md)
 
 这个案例展示：同一段对话可以先沉淀为 Markdown 资产，再通过 HTML 变成可审查、可比较、可导出的思考界面。
 
 ## 和其他 Skill 的关系
 
-OPCSkill 是总入口和资产路由器。其他 skill 不需要都画同样的大结构图；更好的分工是：
+OPCSkill 是汇总层、连接层和资产路由器。其他 skill 不需要都画同样的大结构图；更好的分工是：
 
-- OPCSkill 画“总装配图”：一段对话如何变成资产。
+- OPCSkill 画“总装配图”：人的想法如何经过多个 skill 变成资产。
 - 每个协作 skill 只写自己的输入、输出、边界和何时触发。
 - 如果某个 skill 只是可选增强能力，不要写成硬依赖。
 
